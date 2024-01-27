@@ -70,76 +70,76 @@ class Network(object): #Declaración de nuestra clase, desciende de la clase obj
             else: #Si no: 
                 print("Epoch {0} complete".format(j)) #Imprime en consola: "Epoca (valor de j) complete"
 
-    def update_mini_batch(self, mini_batch, eta):
+    def update_mini_batch(self, mini_batch, eta):#Declaración del método de la clase
         """Update the network's weights and biases by applying
         gradient descent using backpropagation to a single mini batch.
         The ``mini_batch`` is a list of tuples ``(x, y)``, and ``eta``
         is the learning rate."""
-        nabla_b = [np.zeros(b.shape) for b in self.biases]
-        nabla_w = [np.zeros(w.shape) for w in self.weights]
-        for x, y in mini_batch:
-            delta_nabla_b, delta_nabla_w = self.backprop(x, y)
-            nabla_b = [nb+dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
-            nabla_w = [nw+dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
+        nabla_b = [np.zeros(b.shape) for b in self.biases]#Creación de una lista que servirá para actualizar el valor de los bais. Consiste de una lista de matrices, las cuales tienen una forma identica a las ya generadas en self.biases. Cada matriz tiene como valor inicial en sus entradas unicamente 0
+        nabla_w = [np.zeros(w.shape) for w in self.weights] #Lo mismo que en el de arriba pero con los pesos
+        for x, y in mini_batch:#Iterando en los elementos del minibatch:
+            delta_nabla_b, delta_nabla_w = self.backprop(x, y) #Se guardan los valores de la derivada de la función de costo por dato respecto de los bais y de los pesos.
+            nabla_b = [nb+dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]#Se actualizan o suman todas las derivadas respecto del bais
+            nabla_w = [nw+dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]#Lo mismo pero con los pesos
         self.weights = [w-(eta/len(mini_batch))*nw
-                        for w, nw in zip(self.weights, nabla_w)]
+                        for w, nw in zip(self.weights, nabla_w)]#Se actualizan los valores de los pesos mediante los datos de la nabla_w, es decir, se cambian los valores del atributo de peso de tal modo que se minimice la función de costo
         self.biases = [b-(eta/len(mini_batch))*nb
-                       for b, nb in zip(self.biases, nabla_b)]
+                       for b, nb in zip(self.biases, nabla_b)]#Lo mismo pero con los bias
 
-    def backprop(self, x, y):
+    def backprop(self, x, y):#Declaración de un método de la clase.
         """Return a tuple ``(nabla_b, nabla_w)`` representing the
         gradient for the cost function C_x.  ``nabla_b`` and
         ``nabla_w`` are layer-by-layer lists of numpy arrays, similar
         to ``self.biases`` and ``self.weights``."""
-        nabla_b = [np.zeros(b.shape) for b in self.biases]
-        nabla_w = [np.zeros(w.shape) for w in self.weights]
+        nabla_b = [np.zeros(b.shape) for b in self.biases]#Genera una lista de matrices. Cada matriz tiene una forma idéntica a las que están en el atributo self.biases y sus elementos son solo ceros
+        nabla_w = [np.zeros(w.shape) for w in self.weights]#Lo mismo pero con los pesos
         # feedforward
-        activation = x
+        activation = x #Se guarda el primer valor de activación en una variable
         activations = [x] # list to store all the activations, layer by layer
         zs = [] # list to store all the z vectors, layer by layer
-        for b, w in zip(self.biases, self.weights):
-            z = np.dot(w, activation)+b
-            zs.append(z)
-            activation = sigmoid(z)
-            activations.append(activation)
+        for b, w in zip(self.biases, self.weights):#Iterando por los elementos de los atributos biases y pesos, uno a uno:
+            z = np.dot(w, activation)+b #Proucto punto entre el peso y la activación, se le añade el biases. Esta es la definición del vector z 
+            zs.append(z) #Se guarda este valor en la lista zs
+            activation = sigmoid(z)#Se calcula el valor de la activación usando el valor encontrado y la función de activación, la cual es una sigmoide en este caso
+            activations.append(activation)#Se guarda este valor en la lista, representa la activación capa por capa.
         # backward pass
         delta = self.cost_derivative(activations[-1], y) * \
-            sigmoid_prime(zs[-1])
-        nabla_b[-1] = delta
-        nabla_w[-1] = np.dot(delta, activations[-2].transpose())
+            sigmoid_prime(zs[-1])#Calculo de la delta de la última capa. Recordar que es la derivada de la función de costo respecto a z, que se traduce en el valor de la activación de la última capa - el valor de dato, todo multiplicado por la derivada de la función de activación
+        nabla_b[-1] = delta #Se guarda el valor del cambio 
+        nabla_w[-1] = np.dot(delta, activations[-2].transpose())#Se calculan los pesos de la última capa. Es el producto punto de los bias de la ultima capa con la activación de la penultima capa
         # Note that the variable l in the loop below is used a little
         # differently to the notation in Chapter 2 of the book.  Here,
         # l = 1 means the last layer of neurons, l = 2 is the
         # second-last layer, and so on.  It's a renumbering of the
         # scheme in the book, used here to take advantage of the fact
         # that Python can use negative indices in lists.
-        for l in range(2, self.num_layers):
-            z = zs[-l]
-            sp = sigmoid_prime(z)
+        for l in range(2, self.num_layers):#Iterando por todas las capas excepto la de entrada:
+            z = zs[-l] #Se guarga el valor de z de la -l-esima capa
+            sp = sigmoid_prime(z) #Se calcula la derivada en ese punto.
             delta = np.dot(self.weights[-l+1].transpose(), delta) * sp
-            nabla_b[-l] = delta
-            nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
-        return (nabla_b, nabla_w)
+            nabla_b[-l] = delta #La derivada de la función de costo respecto a la bj de la l-esima capa, es la deltaj de la l-ésima capa
+            nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())#La derivada de la función de costo respecto a la w de una neurona de la capa l-1 y l es la función de activación de la j-ésima neurona de la capa l-1 y de la delta correspondiente de la capa l. Se asigna este valor a la lista de las nablas
+        return (nabla_b, nabla_w)#Se regresa una tupla de listas
 
-    def evaluate(self, test_data):
+    def evaluate(self, test_data): #Definición del método para evaluar la red neuronal. Toma como argumento los datos de prueba
         """Return the number of test inputs for which the neural
         network outputs the correct result. Note that the neural
         network's output is assumed to be the index of whichever
         neuron in the final layer has the highest activation."""
         test_results = [(np.argmax(self.feedforward(x)), y)
-                        for (x, y) in test_data]
-        return sum(int(x == y) for (x, y) in test_results)
+                        for (x, y) in test_data]#Se crea una lista de tuplas.El primer elemento de las tuplas regresa el índice del elemento de mayor valor al evaluar el feedforward. El segundo elemento es simplemente el valor y de los datos de prueba
+        return sum(int(x == y) for (x, y) in test_results) #Se regresa la suma de la cantidad de veces que x es igual a y. Se hace la comparación entre estos datos y se castea a 1 si es verdadero o 0 si es falso. Se suman todos estos valores para cada tupla de la lista y se devuelve este datos
 
-    def cost_derivative(self, output_activations, y):
+    def cost_derivative(self, output_activations, y):#Declaración del método que calcula la derivada de costo
         """Return the vector of partial derivatives \partial C_x /
-        \partial a for the output activations."""
-        return (output_activations-y)
+        \partial a for the output activations.""" 
+        return (output_activations-y)# Se regresa el valor de la derivada de costo por dato. Dicha derivada se calcula a mano y se programa en el return
 
 #### Miscellaneous functions
 def sigmoid(z):
     """The sigmoid function."""
-    return 1.0/(1.0+np.exp(-z))
+    return 1.0/(1.0+np.exp(-z)) #Se define la función de activación
 
 def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
-    return sigmoid(z)*(1-sigmoid(z))
+    return sigmoid(z)*(1-sigmoid(z)) #Se define la derivada función de activación.

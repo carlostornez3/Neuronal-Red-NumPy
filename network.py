@@ -133,7 +133,8 @@ class Network(object): #Declaración de nuestra clase, desciende de la clase obj
     def cost_derivative(self, output_activations, y):#Declaración del método que calcula la derivada de costo
         """Return the vector of partial derivatives \partial C_x /
         \partial a for the output activations.""" 
-        return (output_activations-y)# Se regresa el valor de la derivada de costo por dato. Dicha derivada se calcula a mano y se programa en el return
+        #return (output_activations-y)# Se regresa el valor de la derivada de costo por dato. Dicha derivada se calcula a mano y se programa en el return
+        return ((output_activations-y)/(output_activations*(1-output_activations)))#Se implementa la binary cross entropy
 
 #### Miscellaneous functions
 def sigmoid(z):

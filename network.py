@@ -36,6 +36,8 @@ class Network(object): #Declaración de nuestra clase, desciende de la clase obj
         self.weights = [np.random.randn(y, x)
                         for x, y in zip(sizes[:-1], sizes[1:])] #Atributo de la clase el cuál es igual a una lista de matrices, las cuales tendrá "y" filas y "x" columnas. x, y se obtienen de sizes, x toma todos los valores excepto el de la capa de salida, y toma todos excepto el de la capa de entrada. Los elementos de todas las matrices son numeros entre -1 y 1
         self.epsilon=10e-09
+        self.g_b=[np.zeros(b.shape) for b in self.biases]
+        self.g_w=[np.zeros(w.shape) for w in self.weights]
         self.gs_b=[np.zeros(b.shape) for b in self.biases]
         self.gs_w=[np.zeros(w.shape) for w in self.weights]
         self.ep_b=[np.full_like(b,self.epsilon) for b in self.biases]
@@ -94,10 +96,13 @@ class Network(object): #Declaración de nuestra clase, desciende de la clase obj
         
         beta=0.9
         
+        self.g_b=[beta*gb+(1-beta)*nb for gb, nb in zip(self.g_b, nabla_b)]
+        self.g_w=[beta*gw+(1-beta)*nw for gw, nw in zip(self.g_w, nabla_w)]
+        
         self.gs_b=[beta*gsb+(1-beta)*np.square(nb) for gsb, nb in zip(self.gs_b, nabla_b)]
         self.gs_w=[beta*gsw+(1-beta)*np.square(nw) for gsw, nw in zip(self.gs_w, nabla_w)]
-        self.biases = [b-(eta/len(mini_batch))*nb/np.sqrt(gsb+epb) for b, nb, gsb, epb in zip(self.biases,nabla_b,self.gs_b,self.ep_b)]
-        self.weights = [w-(eta/len(mini_batch))*nw/np.sqrt(gsw+epw) for w, nw, gsw, epw in zip(self.weights,nabla_w,self.gs_w,self.ep_w)]
+        self.biases = [b-(eta/len(mini_batch))*gb/np.sqrt(gsb+epb) for b, gb, gsb, epb in zip(self.biases,self.g_b,self.gs_b,self.ep_b)]
+        self.weights = [w-(eta/len(mini_batch))*gw/np.sqrt(gsw+epw) for w, gw, gsw, epw in zip(self.weights,self.g_w,self.gs_w,self.ep_w)]
         
        # self.weights = [w-(eta/len(mini_batch))*nw
         #                for w, nw in zip(self.weights, nabla_w)]#Se actualizan los valores de los pesos mediante los datos de la nabla_w, es decir, se cambian los valores del atributo de peso de tal modo que se minimice la función de costo
@@ -157,6 +162,7 @@ class Network(object): #Declaración de nuestra clase, desciende de la clase obj
 #### Miscellaneous functions
 def sigmoid(z):
     """The sigmoid function."""
+    z = np.clip(z, -500, 500)
     return 1.0/(1.0+np.exp(-z)) #Se define la función de activación
 
 def sigmoid_prime(z):

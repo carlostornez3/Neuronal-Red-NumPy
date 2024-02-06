@@ -29,11 +29,18 @@ class Network(object): #Declaración de nuestra clase, desciende de la clase obj
         layer is assumed to be an input layer, and by convention we
         won't set any biases for those neurons, since biases are only
         ever used in computing the outputs from later layers."""
+        
         self.num_layers = len(sizes)#Atributo de la clase, se le asigna el número de elementos de la lista que se pasa al instanciar un objeto de la clase
         self.sizes = sizes #Atributo de la clase, se le asigna al atributo la lista que se pasa al instanciar la clase
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]#Creación de un atributo, el cual es una lista con los bais. Es generado apartir de números aleatorios. Es una lista de matrices, cada matriz tendrá "y" filas y 1 columna.
         self.weights = [np.random.randn(y, x)
                         for x, y in zip(sizes[:-1], sizes[1:])] #Atributo de la clase el cuál es igual a una lista de matrices, las cuales tendrá "y" filas y "x" columnas. x, y se obtienen de sizes, x toma todos los valores excepto el de la capa de salida, y toma todos excepto el de la capa de entrada. Los elementos de todas las matrices son numeros entre -1 y 1
+        self.epsilon=10e-09
+        self.gs_b=[np.zeros(b.shape) for b in self.biases]
+        self.gs_w=[np.zeros(w.shape) for w in self.weights]
+        self.ep_b=[np.full_like(b,self.epsilon) for b in self.biases]
+        self.ep_w=[np.full_like(w,self.epsilon) for w in self.weights]
+        
 
     def feedforward(self, a): #Se define un método de la clase. Toma como parámetro la activación
         """Return the output of the network if ``a`` is input."""
@@ -75,16 +82,27 @@ class Network(object): #Declaración de nuestra clase, desciende de la clase obj
         gradient descent using backpropagation to a single mini batch.
         The ``mini_batch`` is a list of tuples ``(x, y)``, and ``eta``
         is the learning rate."""
+
+        
         nabla_b = [np.zeros(b.shape) for b in self.biases]#Creación de una lista que servirá para actualizar el valor de los bais. Consiste de una lista de matrices, las cuales tienen una forma identica a las ya generadas en self.biases. Cada matriz tiene como valor inicial en sus entradas unicamente 0
         nabla_w = [np.zeros(w.shape) for w in self.weights] #Lo mismo que en el de arriba pero con los pesos
         for x, y in mini_batch:#Iterando en los elementos del minibatch:
             delta_nabla_b, delta_nabla_w = self.backprop(x, y) #Se guardan los valores de la derivada de la función de costo por dato respecto de los bais y de los pesos.
             nabla_b = [nb+dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]#Se actualizan o suman todas las derivadas respecto del bais
             nabla_w = [nw+dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]#Lo mismo pero con los pesos
-        self.weights = [w-(eta/len(mini_batch))*nw
-                        for w, nw in zip(self.weights, nabla_w)]#Se actualizan los valores de los pesos mediante los datos de la nabla_w, es decir, se cambian los valores del atributo de peso de tal modo que se minimice la función de costo
-        self.biases = [b-(eta/len(mini_batch))*nb
-                       for b, nb in zip(self.biases, nabla_b)]#Lo mismo pero con los bias
+        
+        
+        beta=0.9
+        
+        self.gs_b=[beta*gsb+(1-beta)*np.square(nb) for gsb, nb in zip(self.gs_b, nabla_b)]
+        self.gs_w=[beta*gsw+(1-beta)*np.square(nw) for gsw, nw in zip(self.gs_w, nabla_w)]
+        self.biases = [b-(eta/len(mini_batch))*nb/np.sqrt(gsb+epb) for b, nb, gsb, epb in zip(self.biases,nabla_b,self.gs_b,self.ep_b)]
+        self.weights = [w-(eta/len(mini_batch))*nw/np.sqrt(gsw+epw) for w, nw, gsw, epw in zip(self.weights,nabla_w,self.gs_w,self.ep_w)]
+        
+       # self.weights = [w-(eta/len(mini_batch))*nw
+        #                for w, nw in zip(self.weights, nabla_w)]#Se actualizan los valores de los pesos mediante los datos de la nabla_w, es decir, se cambian los valores del atributo de peso de tal modo que se minimice la función de costo
+        #self.biases = [b-(eta/len(mini_batch))*nb
+         #              for b, nb in zip(self.biases, nabla_b)]#Lo mismo pero con los bias
 
     def backprop(self, x, y):#Declaración de un método de la clase.
         """Return a tuple ``(nabla_b, nabla_w)`` representing the

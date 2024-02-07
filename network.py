@@ -35,7 +35,10 @@ class Network(object): #Declaración de nuestra clase, desciende de la clase obj
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]#Creación de un atributo, el cual es una lista con los bais. Es generado apartir de números aleatorios. Es una lista de matrices, cada matriz tendrá "y" filas y 1 columna.
         self.weights = [np.random.randn(y, x)
                         for x, y in zip(sizes[:-1], sizes[1:])] #Atributo de la clase el cuál es igual a una lista de matrices, las cuales tendrá "y" filas y "x" columnas. x, y se obtienen de sizes, x toma todos los valores excepto el de la capa de salida, y toma todos excepto el de la capa de entrada. Los elementos de todas las matrices son numeros entre -1 y 1
-        self.epsilon=10e-09
+        
+        #Las siguientes listas corresponden a listas de matrices(o vectores) que tienen forma de self.biases y self.weights. Los elementos de dichas matrices se inicializan con ceros en todas las entradas excepto las últimas dos. Estas listas serán usadas para el optimizador Adam.
+        
+        self.epsilon=10e-09   
         self.g_b=[np.zeros(b.shape) for b in self.biases]
         self.g_w=[np.zeros(w.shape) for w in self.weights]
         self.gs_b=[np.zeros(b.shape) for b in self.biases]
@@ -93,23 +96,19 @@ class Network(object): #Declaración de nuestra clase, desciende de la clase obj
             nabla_b = [nb+dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]#Se actualizan o suman todas las derivadas respecto del bais
             nabla_w = [nw+dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]#Lo mismo pero con los pesos
         
+        #Aquí comienza el algoritmo de Adam
+        beta1=0.9 #Parametro del término lineal
+        beta2=0.99 #Parametro de la g cuadratica
         
-        beta1=0.9
-        beta2=0.99
+        self.g_b=[beta1*gb+(1-beta1)*nb for gb, nb in zip(self.g_b, nabla_b)] #Se actualiza la g lineal para el bias
+        self.g_w=[beta1*gw+(1-beta1)*nw for gw, nw in zip(self.g_w, nabla_w)] #Lo mismo para el peso
         
-        self.g_b=[beta1*gb+(1-beta1)*nb for gb, nb in zip(self.g_b, nabla_b)]
-        self.g_w=[beta1*gw+(1-beta2)*nw for gw, nw in zip(self.g_w, nabla_w)]
+        self.gs_b=[beta2*gsb+(1-beta2)*np.square(nb) for gsb, nb in zip(self.gs_b, nabla_b)] #Se actualiza la g cuadrática para el bias
+        self.gs_w=[beta2*gsw+(1-beta2)*np.square(nw) for gsw, nw in zip(self.gs_w, nabla_w)] #Lo mismo para el peso
+        self.biases = [b-(eta/len(mini_batch))*gb/np.sqrt(gsb+epb) for b, gb, gsb, epb in zip(self.biases,self.g_b,self.gs_b,self.ep_b)] #Se actualizan los biases usando las g's cuadráticas y g's lineales
+        self.weights = [w-(eta/len(mini_batch))*gw/np.sqrt(gsw+epw) for w, gw, gsw, epw in zip(self.weights,self.g_w,self.gs_w,self.ep_w)] #Lo mismo pero para el peso
         
-        self.gs_b=[beta2*gsb+(1-beta2)*np.square(nb) for gsb, nb in zip(self.gs_b, nabla_b)]
-        self.gs_w=[beta2*gsw+(1-beta2)*np.square(nw) for gsw, nw in zip(self.gs_w, nabla_w)]
-        self.biases = [b-(eta/len(mini_batch))*gb/np.sqrt(gsb+epb) for b, gb, gsb, epb in zip(self.biases,self.g_b,self.gs_b,self.ep_b)]
-        self.weights = [w-(eta/len(mini_batch))*gw/np.sqrt(gsw+epw) for w, gw, gsw, epw in zip(self.weights,self.g_w,self.gs_w,self.ep_w)]
-        
-       # self.weights = [w-(eta/len(mini_batch))*nw
-        #                for w, nw in zip(self.weights, nabla_w)]#Se actualizan los valores de los pesos mediante los datos de la nabla_w, es decir, se cambian los valores del atributo de peso de tal modo que se minimice la función de costo
-        #self.biases = [b-(eta/len(mini_batch))*nb
-         #              for b, nb in zip(self.biases, nabla_b)]#Lo mismo pero con los bias
-
+      
     def backprop(self, x, y):#Declaración de un método de la clase.
         """Return a tuple ``(nabla_b, nabla_w)`` representing the
         gradient for the cost function C_x.  ``nabla_b`` and
@@ -127,7 +126,7 @@ class Network(object): #Declaración de nuestra clase, desciende de la clase obj
             activation = sigmoid(z)#Se calcula el valor de la activación usando el valor encontrado y la función de activación, la cual es una sigmoide en este caso
             activations.append(activation)#Se guarda este valor en la lista, representa la activación capa por capa.
         # backward pass
-        delta = self.delta_binary(activations[-1], y)#Calculo de la delta de la última capa. Recordar que es la derivada de la función de costo respecto a z, que se traduce en el valor de la activación de la última capa - el valor de dato, todo multiplicado por la derivada de la función de activación
+        delta = self.delta_binary(activations[-1], y) #Se guarda el error de la última capa usando el método delta_binary. Note que ya está implicita la multiplicación de la derivada de la sigmoide en la función.
         nabla_b[-1] = delta #Se guarda el valor del cambio 
         nabla_w[-1] = np.dot(delta, activations[-2].transpose())#Se calculan los pesos de la última capa. Es el producto punto de los bias de la ultima capa con la activación de la penultima capa
         # Note that the variable l in the loop below is used a little
@@ -159,7 +158,7 @@ class Network(object): #Declaración de nuestra clase, desciende de la clase obj
         return (output_activations-y)# Se regresa el valor de la derivada de costo por dato. Dicha derivada se calcula a mano y se programa en el return
         #return ((output_activations-y)/(output_activations*(1-output_activations+1e-09)))#Se implementa la binary cross entropy
         
-    def delta_binary(self, output_activations, y):#Declaración del método que calcula la derivada de costo
+    def delta_binary(self, output_activations, y):#Declaración del método que calcula el error de la última capa para la binary, ya se toma en cuenta la sigma prima.
         return (output_activations-y)
 
 #### Miscellaneous functions

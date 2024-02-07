@@ -94,13 +94,14 @@ class Network(object): #Declaración de nuestra clase, desciende de la clase obj
             nabla_w = [nw+dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]#Lo mismo pero con los pesos
         
         
-        beta=0.9
+        beta1=0.9
+        beta2=0.99
         
-        self.g_b=[beta*gb+(1-beta)*nb for gb, nb in zip(self.g_b, nabla_b)]
-        self.g_w=[beta*gw+(1-beta)*nw for gw, nw in zip(self.g_w, nabla_w)]
+        self.g_b=[beta1*gb+(1-beta1)*nb for gb, nb in zip(self.g_b, nabla_b)]
+        self.g_w=[beta1*gw+(1-beta2)*nw for gw, nw in zip(self.g_w, nabla_w)]
         
-        self.gs_b=[beta*gsb+(1-beta)*np.square(nb) for gsb, nb in zip(self.gs_b, nabla_b)]
-        self.gs_w=[beta*gsw+(1-beta)*np.square(nw) for gsw, nw in zip(self.gs_w, nabla_w)]
+        self.gs_b=[beta2*gsb+(1-beta2)*np.square(nb) for gsb, nb in zip(self.gs_b, nabla_b)]
+        self.gs_w=[beta2*gsw+(1-beta2)*np.square(nw) for gsw, nw in zip(self.gs_w, nabla_w)]
         self.biases = [b-(eta/len(mini_batch))*gb/np.sqrt(gsb+epb) for b, gb, gsb, epb in zip(self.biases,self.g_b,self.gs_b,self.ep_b)]
         self.weights = [w-(eta/len(mini_batch))*gw/np.sqrt(gsw+epw) for w, gw, gsw, epw in zip(self.weights,self.g_w,self.gs_w,self.ep_w)]
         
@@ -126,8 +127,7 @@ class Network(object): #Declaración de nuestra clase, desciende de la clase obj
             activation = sigmoid(z)#Se calcula el valor de la activación usando el valor encontrado y la función de activación, la cual es una sigmoide en este caso
             activations.append(activation)#Se guarda este valor en la lista, representa la activación capa por capa.
         # backward pass
-        delta = self.cost_derivative(activations[-1], y) * \
-            sigmoid_prime(zs[-1])#Calculo de la delta de la última capa. Recordar que es la derivada de la función de costo respecto a z, que se traduce en el valor de la activación de la última capa - el valor de dato, todo multiplicado por la derivada de la función de activación
+        delta = self.delta_binary(activations[-1], y)#Calculo de la delta de la última capa. Recordar que es la derivada de la función de costo respecto a z, que se traduce en el valor de la activación de la última capa - el valor de dato, todo multiplicado por la derivada de la función de activación
         nabla_b[-1] = delta #Se guarda el valor del cambio 
         nabla_w[-1] = np.dot(delta, activations[-2].transpose())#Se calculan los pesos de la última capa. Es el producto punto de los bias de la ultima capa con la activación de la penultima capa
         # Note that the variable l in the loop below is used a little
@@ -156,13 +156,16 @@ class Network(object): #Declaración de nuestra clase, desciende de la clase obj
     def cost_derivative(self, output_activations, y):#Declaración del método que calcula la derivada de costo
         """Return the vector of partial derivatives \partial C_x /
         \partial a for the output activations.""" 
-        #return (output_activations-y)# Se regresa el valor de la derivada de costo por dato. Dicha derivada se calcula a mano y se programa en el return
-        return ((output_activations-y)/(output_activations*(1-output_activations)))#Se implementa la binary cross entropy
+        return (output_activations-y)# Se regresa el valor de la derivada de costo por dato. Dicha derivada se calcula a mano y se programa en el return
+        #return ((output_activations-y)/(output_activations*(1-output_activations+1e-09)))#Se implementa la binary cross entropy
+        
+    def delta_binary(self, output_activations, y):#Declaración del método que calcula la derivada de costo
+        return (output_activations-y)
 
 #### Miscellaneous functions
 def sigmoid(z):
     """The sigmoid function."""
-    z = np.clip(z, -500, 500)
+  #  z = np.clip(z, -500, 500)
     return 1.0/(1.0+np.exp(-z)) #Se define la función de activación
 
 def sigmoid_prime(z):

@@ -50,7 +50,9 @@ y_testc = keras.utils.to_categorical(y_test, num_classes)
 
 
 model = Sequential()
-model.add(Dense(30, activation='sigmoid', input_shape=(784,)))
+model.add(Dense(500, activation='sigmoid', input_shape=(784,)))
+model.add(Dense(100, activation='sigmoid'))
+model.add(Dense(30, activation='sigmoid'))
 #model.add(Dropout(0.2))
 model.add(Dense(num_classes, activation='sigmoid'))
 
@@ -77,8 +79,6 @@ score = model.evaluate(x_testv, y_testc, verbose=1)
 
 print(score)
 a=model.predict(x_testv)
-#b=model.predict_proba(x_testv)
-print(a.shape)
 print(a[1])
 print("resultado correcto:")
 print(y_testc[1])

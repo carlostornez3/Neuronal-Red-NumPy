@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/carlo/Documents/Codes/RedesNeuronales/Neuronal-Red-NumPy/Red%20keras/mlruns/0/5b3c85a1899a4402bfa431e2854936f9/artifacts
+end_time: 1707696740707
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 5b3c85a1899a4402bfa431e2854936f9
+run_name: debonair-skink-472
+run_uuid: 5b3c85a1899a4402bfa431e2854936f9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707696731436
+status: 4
+tags: []
+user_id: carlo

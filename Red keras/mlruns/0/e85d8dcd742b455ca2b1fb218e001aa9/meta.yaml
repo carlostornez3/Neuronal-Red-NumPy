@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/carlo/Documents/Codes/RedesNeuronales/Neuronal-Red-NumPy/Red%20keras/mlruns/0/e85d8dcd742b455ca2b1fb218e001aa9/artifacts
+end_time: 1707697903116
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: e85d8dcd742b455ca2b1fb218e001aa9
+run_name: rogue-bass-774
+run_uuid: e85d8dcd742b455ca2b1fb218e001aa9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707697849148
+status: 3
+tags: []
+user_id: carlo

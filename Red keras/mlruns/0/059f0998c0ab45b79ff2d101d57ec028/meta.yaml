@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/carlo/Documents/Codes/RedesNeuronales/Neuronal-Red-NumPy/Red%20keras/mlruns/0/059f0998c0ab45b79ff2d101d57ec028/artifacts
+end_time: 1707697354091
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 059f0998c0ab45b79ff2d101d57ec028
+run_name: fortunate-conch-783
+run_uuid: 059f0998c0ab45b79ff2d101d57ec028
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707697296963
+status: 3
+tags: []
+user_id: carlo

@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/carlo/Documents/Codes/RedesNeuronales/Neuronal-Red-NumPy/Red%20keras/mlruns/0/7067c5e19d8b43e3a7b7d7ce76ef0012/artifacts
+end_time: 1707697627149
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 7067c5e19d8b43e3a7b7d7ce76ef0012
+run_name: grandiose-cub-836
+run_uuid: 7067c5e19d8b43e3a7b7d7ce76ef0012
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707697574095
+status: 3
+tags: []
+user_id: carlo

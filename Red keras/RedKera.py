@@ -50,9 +50,10 @@ y_testc = keras.utils.to_categorical(y_test, num_classes)
 
 
 model = Sequential()
-model.add(Dense(500, activation='relu6', input_shape=(784,)))
-model.add(Dense(100, activation='relu'))
+model.add(Dense(60, activation='relu6', input_shape=(784,)))
+model.add(Dense(50, activation='relu'))
 model.add(Dense(30, activation='tanh'))
+model.add(Dense(20, activation='sigmoid'))
 #model.add(Dropout(0.2))
 model.add(Dense(num_classes, activation='softmax'))
 

@@ -4,7 +4,7 @@ from tensorflow.keras.datasets import mnist
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.optimizers import RMSprop, SGD, Adam
-
+from tensorflow.keras import activations
 import time
 
 #Para escribir logs en wandb
@@ -50,11 +50,11 @@ y_testc = keras.utils.to_categorical(y_test, num_classes)
 
 
 model = Sequential()
-model.add(Dense(500, activation='sigmoid', input_shape=(784,)))
-model.add(Dense(100, activation='sigmoid'))
-model.add(Dense(30, activation='sigmoid'))
+model.add(Dense(500, activation='relu6', input_shape=(784,)))
+model.add(Dense(100, activation='relu'))
+model.add(Dense(30, activation='tanh'))
 #model.add(Dropout(0.2))
-model.add(Dense(num_classes, activation='sigmoid'))
+model.add(Dense(num_classes, activation='softmax'))
 
 model.summary()
 start_time = time.time()

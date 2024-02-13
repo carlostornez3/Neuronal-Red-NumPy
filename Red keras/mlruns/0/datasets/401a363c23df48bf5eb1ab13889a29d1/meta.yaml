@@ -1,0 +1,11 @@
+digest: caedbe17
+name: dataset
+profile: '{"features_shape": [5000, 784], "features_size": 3920000, "features_nbytes":
+  15680000, "targets_shape": [5000, 10], "targets_size": 50000, "targets_nbytes":
+  200000}'
+schema: '{"mlflow_tensorspec": {"features": "[{\"type\": \"tensor\", \"tensor-spec\":
+  {\"dtype\": \"float32\", \"shape\": [-1, 784]}}]", "targets": "[{\"type\": \"tensor\",
+  \"tensor-spec\": {\"dtype\": \"float32\", \"shape\": [-1, 10]}}]"}}'
+source: '{"tags": {"mlflow.user": "carlo", "mlflow.source.name": "C:\\Users\\carlo\\Documents\\Codes\\RedesNeuronales\\Neuronal-Red-NumPy\\Red
+  keras\\RedKera.py", "mlflow.source.type": "LOCAL", "mlflow.source.git.commit": "ed4f9d0dcc2f38e74981909a6421cfb0e37a09c3"}}'
+source_type: code

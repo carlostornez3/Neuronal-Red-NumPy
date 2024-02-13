@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/carlo/Documents/Codes/RedesNeuronales/Neuronal-Red-NumPy/Red%20keras/mlruns/0/c1ad27a14e2f4a3caf14197d258e9121/artifacts
+end_time: 1707782850607
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: c1ad27a14e2f4a3caf14197d258e9121
+run_name: bright-toad-272
+run_uuid: c1ad27a14e2f4a3caf14197d258e9121
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707782692748
+status: 3
+tags: []
+user_id: carlo

@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/carlo/Documents/Codes/RedesNeuronales/Neuronal-Red-NumPy/Red%20keras/mlruns/0/086694e5fc88419f9346737974d8d6c2/artifacts
+end_time: 1707781231904
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 086694e5fc88419f9346737974d8d6c2
+run_name: judicious-robin-208
+run_uuid: 086694e5fc88419f9346737974d8d6c2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707781025425
+status: 3
+tags: []
+user_id: carlo

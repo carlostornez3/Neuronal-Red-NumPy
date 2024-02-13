@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/carlo/Documents/Codes/RedesNeuronales/Neuronal-Red-NumPy/Red%20keras/mlruns/0/3a88f5688fcc49a084679dcfdfa212c9/artifacts
+end_time: 1707781888643
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 3a88f5688fcc49a084679dcfdfa212c9
+run_name: bemused-goat-971
+run_uuid: 3a88f5688fcc49a084679dcfdfa212c9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707781302477
+status: 3
+tags: []
+user_id: carlo

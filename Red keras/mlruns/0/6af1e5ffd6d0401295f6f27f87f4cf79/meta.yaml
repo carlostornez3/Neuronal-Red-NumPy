@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/carlo/Documents/Codes/RedesNeuronales/Neuronal-Red-NumPy/Red%20keras/mlruns/0/6af1e5ffd6d0401295f6f27f87f4cf79/artifacts
+end_time: 1707780213420
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 6af1e5ffd6d0401295f6f27f87f4cf79
+run_name: fortunate-shrew-512
+run_uuid: 6af1e5ffd6d0401295f6f27f87f4cf79
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707780140122
+status: 3
+tags: []
+user_id: carlo

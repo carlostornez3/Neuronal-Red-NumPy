@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/carlo/Documents/Codes/RedesNeuronales/Neuronal-Red-NumPy/Red%20keras/mlruns/0/1bc9780c449c4c348f0f9c3dc88445d9/artifacts
+end_time: 1707981108976
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 1bc9780c449c4c348f0f9c3dc88445d9
+run_name: classy-goose-176
+run_uuid: 1bc9780c449c4c348f0f9c3dc88445d9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707980967388
+status: 4
+tags: []
+user_id: carlo

@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/carlo/Documents/Codes/RedesNeuronales/Neuronal-Red-NumPy/Red%20keras/mlruns/122273131094484958/8c432240ea7145a9ae011c1830cb2005/artifacts
+end_time: 1707980771159
+entry_point_name: ''
+experiment_id: '122273131094484958'
+lifecycle_stage: active
+run_id: 8c432240ea7145a9ae011c1830cb2005
+run_name: skittish-shoat-285
+run_uuid: 8c432240ea7145a9ae011c1830cb2005
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707980765221
+status: 4
+tags: []
+user_id: carlo

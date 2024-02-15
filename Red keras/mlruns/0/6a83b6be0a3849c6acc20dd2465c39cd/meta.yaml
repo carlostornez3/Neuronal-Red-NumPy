@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/carlo/Documents/Codes/RedesNeuronales/Neuronal-Red-NumPy/Red%20keras/mlruns/0/6a83b6be0a3849c6acc20dd2465c39cd/artifacts
+end_time: 1707981403391
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 6a83b6be0a3849c6acc20dd2465c39cd
+run_name: amusing-bass-551
+run_uuid: 6a83b6be0a3849c6acc20dd2465c39cd
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707981209745
+status: 3
+tags: []
+user_id: carlo

@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/carlo/Documents/Codes/RedesNeuronales/Neuronal-Red-NumPy/Red%20keras/mlruns/0/ecacff7414944cff9c8c28dc91da2f4e/artifacts
+end_time: 1707980952367
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: ecacff7414944cff9c8c28dc91da2f4e
+run_name: nervous-shad-477
+run_uuid: ecacff7414944cff9c8c28dc91da2f4e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707980855581
+status: 4
+tags: []
+user_id: carlo

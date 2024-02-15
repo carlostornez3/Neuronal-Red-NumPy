@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/carlo/Documents/Codes/RedesNeuronales/Neuronal-Red-NumPy/Red%20keras/mlruns/122273131094484958/149249a21b574071a3359219ee18a614/artifacts
+end_time: 1707980739986
+entry_point_name: ''
+experiment_id: '122273131094484958'
+lifecycle_stage: active
+run_id: 149249a21b574071a3359219ee18a614
+run_name: delicate-boar-175
+run_uuid: 149249a21b574071a3359219ee18a614
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707980726024
+status: 4
+tags: []
+user_id: carlo

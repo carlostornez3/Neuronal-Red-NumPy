@@ -27,6 +27,8 @@ batch_size = 120
 #wandb.config.patito = "cuacCuac"
 ###################
 import mlflow
+import mlflow.tensorflow
+#mlflow.set_experiment("Drop_l1_l2")
 mlflow.tensorflow.autolog()
 
 dataset=mnist.load_data()
@@ -55,8 +57,8 @@ num_classes=10
 y_trainc = keras.utils.to_categorical(y_train, num_classes)
 y_testc = keras.utils.to_categorical(y_test, num_classes)
 
-prob=0.5
-reg = keras.regularizers.L1L2(l1=0.0000, l2=0.0000)
+prob=0.2
+reg = keras.regularizers.L1L2(l1=0.0001, l2=0.0001)
 model = Sequential()
 model.add(Dense(60, activation='relu6', input_shape=(784,), kernel_regularizer=reg))
 model.add(Dropout(prob))

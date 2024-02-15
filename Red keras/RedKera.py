@@ -55,15 +55,17 @@ num_classes=10
 y_trainc = keras.utils.to_categorical(y_train, num_classes)
 y_testc = keras.utils.to_categorical(y_test, num_classes)
 
-
-
-reg = keras.regularizers.L2(0.0001)
+prob=0.5
+reg = keras.regularizers.L1L2(l1=0.0000, l2=0.0000)
 model = Sequential()
 model.add(Dense(60, activation='relu6', input_shape=(784,), kernel_regularizer=reg))
+model.add(Dropout(prob))
 model.add(Dense(50, activation='relu',kernel_regularizer=reg))
+model.add(Dropout(prob))
 model.add(Dense(30, activation='tanh',kernel_regularizer=reg))
+model.add(Dropout(prob))
 model.add(Dense(20, activation='sigmoid',kernel_regularizer=reg))
-#model.add(Dropout(0.2))
+model.add(Dropout(prob))
 model.add(Dense(num_classes, activation='softmax',kernel_regularizer=reg))
 
 model.summary()

@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/carlo/Documents/Codes/RedesNeuronales/Neuronal-Red-NumPy/Red%20keras/mlruns/0/832e55d287af42af8a2069295226e76f/artifacts
+end_time: 1707975710675
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 832e55d287af42af8a2069295226e76f
+run_name: thundering-moth-142
+run_uuid: 832e55d287af42af8a2069295226e76f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707975675625
+status: 4
+tags: []
+user_id: carlo

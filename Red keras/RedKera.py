@@ -55,15 +55,14 @@ num_classes=10
 y_trainc = keras.utils.to_categorical(y_train, num_classes)
 y_testc = keras.utils.to_categorical(y_test, num_classes)
 
-
-val_reg=0.0001
+reg = keras.regularizers.L1L2(l1=0.0001, l2=0.0001)
 model = Sequential()
-model.add(Dense(60, activation='relu6', input_shape=(784,), kernel_regularizer=regularizers.L1(val_reg)))
-model.add(Dense(50, activation='relu',kernel_regularizer=regularizers.L1(val_reg)))
-model.add(Dense(30, activation='tanh',kernel_regularizer=regularizers.L1(val_reg)))
-model.add(Dense(20, activation='sigmoid',kernel_regularizer=regularizers.L1(val_reg)))
+model.add(Dense(60, activation='relu6', input_shape=(784,), kernel_regularizer=reg))
+model.add(Dense(50, activation='relu',kernel_regularizer=reg))
+model.add(Dense(30, activation='tanh',kernel_regularizer=reg))
+model.add(Dense(20, activation='sigmoid',kernel_regularizer=reg))
 #model.add(Dropout(0.2))
-model.add(Dense(num_classes, activation='softmax',kernel_regularizer=regularizers.L1(val_reg)))
+model.add(Dense(num_classes, activation='softmax',kernel_regularizer=reg))
 
 model.summary()
 earlystop = EarlyStopping(monitor='val_loss',mode='min',restore_best_weights=False,patience=20,verbose=1)

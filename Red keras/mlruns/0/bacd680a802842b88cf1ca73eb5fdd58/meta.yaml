@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/carlo/Documents/Codes/RedesNeuronales/Neuronal-Red-NumPy/Red%20keras/mlruns/0/bacd680a802842b88cf1ca73eb5fdd58/artifacts
+end_time: 1707978732794
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: bacd680a802842b88cf1ca73eb5fdd58
+run_name: calm-shark-480
+run_uuid: bacd680a802842b88cf1ca73eb5fdd58
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707978504117
+status: 3
+tags: []
+user_id: carlo

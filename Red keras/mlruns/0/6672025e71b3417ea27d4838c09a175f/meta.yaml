@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/carlo/Documents/Codes/RedesNeuronales/Neuronal-Red-NumPy/Red%20keras/mlruns/0/6672025e71b3417ea27d4838c09a175f/artifacts
+end_time: 1707981821223
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 6672025e71b3417ea27d4838c09a175f
+run_name: resilient-squid-538
+run_uuid: 6672025e71b3417ea27d4838c09a175f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707981666902
+status: 3
+tags: []
+user_id: carlo
